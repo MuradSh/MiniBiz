@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:minibiz/startup/businessDetails.dart';
 import 'package:minibiz/startup/login.dart';
 import 'package:minibiz/startup/signup.dart';
-import 'package:splashscreen/splashscreen.dart';
 void main() {
   runApp(MyApp());
   //runApp(SplashPage());
