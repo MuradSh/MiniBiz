@@ -1,5 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:minibiz/startup/BusinessProfile.dart';
 import 'package:minibiz/startup/businessDetails.dart';
 import 'package:minibiz/startup/login.dart';
 import 'package:minibiz/startup/signup.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
         //home: login(),
         home: AnimatedSplashScreen(
           splash: Image.asset('assets/SplashFast.gif'),
-          nextScreen: login(),
+          nextScreen: BusinessProfile(),
           splashIconSize: 500,
           splashTransition: SplashTransition.fadeTransition,
            backgroundColor: Colors.white,

@@ -30,7 +30,8 @@ class _loginState extends State<login> {
         body: Container(
           child:SafeArea(
             child: Column(
-              children: [   Image(
+              children: [
+                Image(
                 image: AssetImage("assets/MinibizEdited.png"),
                 height: _mediaHeight*0.23,
                 width: _mediaHeight*0.23,

@@ -56,7 +56,6 @@ class _BusinessDetailsState extends State<BusinessDetails> {
                 ),
                  SizedBox(height: 15,),
 
-
                  Padding(
                    padding: const EdgeInsets.symmetric(horizontal: 10),
                    child:
