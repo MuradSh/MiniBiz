@@ -4,6 +4,9 @@ import 'package:minibiz/widgets/TextFieldEnhanced.dart';
 import 'package:minibiz/startup/businessSignUp.dart';
 import 'package:minibiz/startup/login.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:minibiz/widgets/PageHelper.dart';
 
 class businessLogin extends StatefulWidget {
   const businessLogin({Key? key}) : super(key: key);
@@ -16,9 +19,62 @@ class _businessLoginState extends State<businessLogin> {
   double _mediaHeight = 0;
   double _mediaWidth = 0;
 
-  // FirebaseAuth _auth = FirebaseAuth.instance;
-  final _phoneFieldController = TextEditingController();
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  final _nameFieldController = TextEditingController();
   final _passFieldController = TextEditingController();
+
+  _login() async{
+    if(_nameFieldController.text.length==0 || _passFieldController.text.length==0){
+      PageHelper.showOkAlertDialog(context: context,alertDialogTitle: "Error",alertDialogMessage: 'Please enter values');
+      return;
+    }
+    String emailFinal = _nameFieldController.text.trim()+"@minibizwebsite.com";
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Padding(
+            padding: EdgeInsets.all(15),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                new CircularProgressIndicator(
+                  color: Colors.purple,
+                ),
+                SizedBox(width: 20),
+                Text("Loading",style: TextStyle(fontSize: 25),),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+
+    try{
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: emailFinal,
+          password: _passFieldController.text.trim()
+      );
+      var userId = _auth.currentUser!.uid;
+      Navigator.pop(context);
+      print("OKKKK");
+      // Navigator.push(context, new MaterialPageRoute(
+      //     builder: (context) =>
+      //     new mainMap()
+      // ));
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      Navigator.pop(context);
+      if (e.code == 'user-not-found' ) {
+        PageHelper.showOkAlertDialog(context: context,alertDialogTitle: "Error",alertDialogMessage: 'User not found');
+      }else if (e.code == 'wrong-password') {
+        PageHelper.showOkAlertDialog(context: context,alertDialogTitle: "Error",alertDialogMessage: 'Wrong password');
+      }else{
+        PageHelper.showOkAlertDialog(context: context,alertDialogTitle: "Error",alertDialogMessage: 'Error. Please try again.');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,12 +123,12 @@ class _businessLoginState extends State<businessLogin> {
                         SizedBox(height:  _mediaHeight*0.07),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: TextFieldEnhanced("Business Name",Icons.storefront),
+                          child: TextFieldEnhanced("Business Name",Icons.storefront,controller: _nameFieldController,),
                         ),
                         SizedBox(height:  _mediaHeight*0.05),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: TextFieldEnhanced("Password",Icons.lock,passField: true,),
+                          child: TextFieldEnhanced("Password",Icons.lock,passField: true,controller: _passFieldController,),
                         ),
                         SizedBox(height:  _mediaHeight*0.05),
                         SizedBox(
@@ -80,7 +136,7 @@ class _businessLoginState extends State<businessLogin> {
                           height: _mediaHeight*0.07,
                           child: ElevatedButton(
                             onPressed: () {
-                              print("a");
+                              _login();
                             },
                             child: Text("Sign In",style: TextStyle(fontFamily: 'Quicksand',fontWeight: FontWeight.w500),),
                             style: ElevatedButton.styleFrom(

@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:minibiz/widgets/TextFieldEnhanced.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:minibiz/widgets/PageHelper.dart';
 
 class BusinessDetails extends StatefulWidget {
-  const BusinessDetails({Key? key}) : super(key: key);
+  final TextEditingController username;
+  final TextEditingController pass;
+  final TextEditingController phone;
+
+  const BusinessDetails(this.username,this.pass,this.phone,{Key? key}) : super(key: key);
 
   @override
   _BusinessDetailsState createState() => _BusinessDetailsState();
@@ -16,8 +23,77 @@ class _BusinessDetailsState extends State<BusinessDetails> {
   String? _selectedValue;
   String? _selectedLocation;
 
-  // FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseAuth _auth = FirebaseAuth.instance;
   final _bioFieldController = TextEditingController();
+
+  _signup() async{
+    String emailFinal = widget.username.text.trim()+"@minibizwebsite.com";
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Padding(
+            padding: EdgeInsets.all(15),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                new CircularProgressIndicator(
+                  color: Colors.purple,
+                ),
+                SizedBox(width: 20),
+                Text("Loading",style: TextStyle(fontSize: 25),),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+
+    try {
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+          email: emailFinal,
+          password: widget.pass.text
+      );
+
+      var userId = _auth.currentUser!.uid;
+      print(userId);
+      Navigator.pop(context);
+      CollectionReference usersFB = FirebaseFirestore.instance.collection('businesses');
+      usersFB.doc(userId)
+          .set({
+        "name": widget.username.text,
+        "password": widget.pass.text,
+        "phone": widget.phone.text,
+        "description": _bioFieldController.text,
+        "city": _selectedLocation,
+        "type": _selectedValue,
+      })
+          .onError((error, stackTrace) => print(error))
+          .then((value) {
+        // Navigator.push(context, new MaterialPageRoute(
+        //     builder: (context) =>
+        //     new onBoardDriver()
+        // ));
+        print("doneee");
+      });
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      new Future.delayed(new Duration(seconds: 0), () {
+        Navigator.pop(context); //pop dialog
+      }).then((value){
+        PageHelper.showOkAlertDialog(context:context,alertDialogTitle:"Error",alertDialogMessage:"Please try again");
+        print(e);
+      });
+    } catch (e) {
+      Navigator.pop(context);
+      new Future.delayed(new Duration(seconds: 1), () {
+        Navigator.pop(context); //pop dialog
+      }).then((value){
+        PageHelper.showOkAlertDialog(context:context,alertDialogTitle:"Error",alertDialogMessage:e.toString());
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +149,7 @@ class _BusinessDetailsState extends State<BusinessDetails> {
                            border: OutlineInputBorder(),
                            hintText: 'Describe your business'
                        ),
+                       controller: _bioFieldController,
                        maxLines: 7,
                      ),
                      //SizedBox(height:  _mediaHeight*0.3),
@@ -154,7 +231,9 @@ class _BusinessDetailsState extends State<BusinessDetails> {
                 SizedBox(height: _mediaHeight*0.03,),
 
                 TextButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      _signup();
+                    },
                     child: Container(
                         width: _mediaWidth*0.9,
                         height: _mediaHeight*0.059,
@@ -163,7 +242,6 @@ class _BusinessDetailsState extends State<BusinessDetails> {
                             color: Color.fromRGBO(70, 197, 206, 1)
 
                         ),
-
                         child: Center(
                           child: Text(
                             "Create Account",

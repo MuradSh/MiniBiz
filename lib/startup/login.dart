@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:minibiz/widgets/TextFieldEnhanced.dart';
 import 'package:minibiz/startup/signup.dart';
 import 'package:minibiz/startup/businessLogin.dart';
+import 'package:minibiz/widgets/PageHelper.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class login extends StatefulWidget {
   const login({Key? key}) : super(key: key);
@@ -16,10 +20,63 @@ class _loginState extends State<login> {
   double _mediaHeight = 0;
   double _mediaWidth = 0;
 
-  // FirebaseAuth _auth = FirebaseAuth.instance;
-  final _phoneFieldController = TextEditingController();
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  final _usernameField = TextEditingController();
   final _passFieldController = TextEditingController();
-  
+
+  _handleLogin() async{
+    if(_usernameField.text.length==0 || _passFieldController.text.length==0){
+      PageHelper.showOkAlertDialog(context: context,alertDialogTitle: "Error",alertDialogMessage: 'Please enter values');
+      return;
+    }
+    String emailFinal = "a"+_usernameField.text.trim()+"@minibizpersonal.com";
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Padding(
+            padding: EdgeInsets.all(15),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                new CircularProgressIndicator(
+                  color: Colors.purple,
+                ),
+                SizedBox(width: 20),
+                Text("Loading",style: TextStyle(fontSize: 25),),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+
+    try{
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: emailFinal,
+          password: _passFieldController.text.trim()
+      );
+      var userId = _auth.currentUser!.uid;
+      Navigator.pop(context);
+      print("OKKKK");
+      // Navigator.push(context, new MaterialPageRoute(
+      //     builder: (context) =>
+      //     new mainMap()
+      // ));
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      Navigator.pop(context);
+      if (e.code == 'user-not-found' ) {
+        PageHelper.showOkAlertDialog(context: context,alertDialogTitle: "Error",alertDialogMessage: 'User not found');
+      }else if (e.code == 'wrong-password') {
+        PageHelper.showOkAlertDialog(context: context,alertDialogTitle: "Error",alertDialogMessage: 'Wrong password');
+      }else{
+        PageHelper.showOkAlertDialog(context: context,alertDialogTitle: "Error",alertDialogMessage: 'Error. Please try again.');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     
@@ -67,12 +124,12 @@ class _loginState extends State<login> {
                           SizedBox(height:  _mediaHeight*0.07),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: TextFieldEnhanced("Username",Icons.person),
+                            child: TextFieldEnhanced("Username",Icons.person,controller: _usernameField,),
                           ),
                           SizedBox(height:  _mediaHeight*0.05),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: TextFieldEnhanced("Password",Icons.lock,passField: true,),
+                            child: TextFieldEnhanced("Password",Icons.lock,passField: true,controller: _passFieldController,),
                           ),
                           SizedBox(height:  _mediaHeight*0.05),
                           SizedBox(
@@ -80,7 +137,7 @@ class _loginState extends State<login> {
                             height: _mediaHeight*0.07,
                             child: ElevatedButton(
                               onPressed: () {
-                                print("a");
+                                _handleLogin();
                               },
                               child: Text("Sign In",style: TextStyle(fontFamily: 'Quicksand',fontWeight: FontWeight.w500),),
                               style: ElevatedButton.styleFrom(

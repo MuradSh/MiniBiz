@@ -16,8 +16,8 @@ class _signupState extends State<signup> {
   double _mediaHeight = 0;
   double _mediaWidth = 0;
 
-  // FirebaseAuth _auth = FirebaseAuth.instance;
   final _phoneFieldController = TextEditingController();
+  final _usernameField = TextEditingController();
   final _passFieldController = TextEditingController();
 
   @override
@@ -68,17 +68,17 @@ class _signupState extends State<signup> {
                           SizedBox(height:  _mediaHeight*0.07),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: TextFieldEnhanced("Phone",Icons.phone),
+                            child: TextFieldEnhanced("Phone",Icons.phone,controller: _phoneFieldController,),
                           ),
                           SizedBox(height:  _mediaHeight*0.05),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: TextFieldEnhanced("Username",Icons.person),
+                            child: TextFieldEnhanced("Username",Icons.person,controller: _usernameField,),
                           ),
                           SizedBox(height:  _mediaHeight*0.05),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: TextFieldEnhanced("Password",Icons.lock,passField: true,),
+                            child: TextFieldEnhanced("Password",Icons.lock,passField: true,controller: _passFieldController,),
                           ),
                           SizedBox(height:  _mediaHeight*0.03),
                           SizedBox(
@@ -88,7 +88,9 @@ class _signupState extends State<signup> {
                               onPressed: () {
                                 Navigator.push(context, new MaterialPageRoute(
                                     builder: (context) =>
-                                    new personalDetails())
+                                    new personalDetails(
+                                      _usernameField,_passFieldController,_phoneFieldController
+                                    ))
                                 );
                               },
                               child: Text("Sign Up",style: TextStyle(fontFamily: 'Quicksand',fontWeight: FontWeight.w500),),
