@@ -1,13 +1,20 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:minibiz/startup/businessDetails.dart';
 import 'package:minibiz/startup/login.dart';
+import 'package:minibiz/startup/signup.dart';
+import 'package:splashscreen/splashscreen.dart';
 void main() {
   runApp(MyApp());
+  //runApp(SplashPage());
+
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -22,10 +29,20 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: login(),
+      //home: login(),
+      home: AnimatedSplashScreen(
+        splash: Image.asset('assets/SplashFast.gif'),
+        nextScreen: BusinessDetails(),
+        splashIconSize: 500,
+        splashTransition: SplashTransition.fadeTransition,
+         backgroundColor: Colors.white,
+        //duration: 1500,
+      ),
+      //home: SplashPage(),
     );
   }
 }
+
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);

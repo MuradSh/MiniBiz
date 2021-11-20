@@ -56,7 +56,10 @@ class _loginState extends State<login> {
                   child: Container(
                     height: 220,
                     color: Colors.red,
-                    child: Center(child: Text("OctagonalClipper()")),
+                    child: Center(
+                        child:
+                        Text("OctagonalClipper()"),
+                    ),
                   ),
                 ),
               ],
