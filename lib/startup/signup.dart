@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:minibiz/widgets/TextFieldEnhanced.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:minibiz/startup/login.dart';
+import 'package:minibiz/startup/businessDetails.dart';
 
 class signup extends StatefulWidget {
   const signup({Key? key}) : super(key: key);
@@ -85,7 +86,10 @@ class _signupState extends State<signup> {
                             height: _mediaHeight*0.07,
                             child: ElevatedButton(
                               onPressed: () {
-                                print("a");
+                                Navigator.push(context, new MaterialPageRoute(
+                                    builder: (context) =>
+                                    new BusinessDetails())
+                                );
                               },
                               child: Text("Sign Up",style: TextStyle(fontFamily: 'Quicksand',fontWeight: FontWeight.w500),),
                               style: ElevatedButton.styleFrom(

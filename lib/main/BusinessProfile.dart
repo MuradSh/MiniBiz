@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:minibiz/startup/ChangeBusinessDetails.dart';
+import 'package:minibiz/main/ChangeBusinessDetails.dart';
 import 'package:minibiz/startup/login.dart';
 
 class BusinessProfile extends StatefulWidget {

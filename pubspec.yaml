@@ -83,6 +83,9 @@ flutter:
         - asset: fonts/Quicksand-Light.ttf
         - asset: fonts/Quicksand-Medium.ttf
           weight: 500
+    - family: Roboto
+      fonts:
+        - asset: fonts/Roboto-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
