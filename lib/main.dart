@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         //home: login(),
         home: AnimatedSplashScreen(
           splash: Image.asset('assets/SplashFast.gif'),
-          nextScreen: BusinessProfile(),
+          nextScreen: login(),
           splashIconSize: 500,
           splashTransition: SplashTransition.fadeTransition,
            backgroundColor: Colors.white,

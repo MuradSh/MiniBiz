@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:minibiz/widgets/TextFieldEnhanced.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:minibiz/startup/login.dart';
-import 'package:minibiz/startup/personalDetails.dart';
+import 'package:minibiz/startup/businessLogin.dart';
+import 'package:minibiz/startup/businessDetails.dart';
 
-class signup extends StatefulWidget {
-  const signup({Key? key}) : super(key: key);
+class businessSignUp extends StatefulWidget {
+  const businessSignUp({Key? key}) : super(key: key);
 
   @override
-  _signupState createState() => _signupState();
+  _businessSignUpState createState() => _businessSignUpState();
 }
 
-class _signupState extends State<signup> {
-
+class _businessSignUpState extends State<businessSignUp> {
   double _mediaHeight = 0;
   double _mediaWidth = 0;
 
@@ -27,7 +26,7 @@ class _signupState extends State<signup> {
     _mediaWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child:SafeArea(
             child: Column(
@@ -73,7 +72,7 @@ class _signupState extends State<signup> {
                           SizedBox(height:  _mediaHeight*0.05),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: TextFieldEnhanced("Username",Icons.person),
+                            child: TextFieldEnhanced("Business Name",Icons.storefront),
                           ),
                           SizedBox(height:  _mediaHeight*0.05),
                           Padding(
@@ -88,7 +87,7 @@ class _signupState extends State<signup> {
                               onPressed: () {
                                 Navigator.push(context, new MaterialPageRoute(
                                     builder: (context) =>
-                                    new personalDetails())
+                                    new BusinessDetails())
                                 );
                               },
                               child: Text("Sign Up",style: TextStyle(fontFamily: 'Quicksand',fontWeight: FontWeight.w500),),
@@ -111,7 +110,7 @@ class _signupState extends State<signup> {
                                         onTap: () {
                                           Navigator.push(context, new MaterialPageRoute(
                                               builder: (context) =>
-                                              new login())
+                                              new businessLogin())
                                           );
                                         },
                                         child: Text(
@@ -125,11 +124,11 @@ class _signupState extends State<signup> {
                               )
                           ),
                           SizedBox(height:  _mediaHeight*0.02),
-                    ],
+                        ],
+                      ),
+                    ),
                   ),
-                        ),
-                            ),
-                  ),
+                ),
 
 
 

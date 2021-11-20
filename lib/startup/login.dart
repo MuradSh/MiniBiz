@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minibiz/widgets/TextFieldEnhanced.dart';
 import 'package:minibiz/startup/signup.dart';
+import 'package:minibiz/startup/businessLogin.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 class login extends StatefulWidget {
@@ -113,6 +114,30 @@ class _loginState extends State<login> {
                                     ],
                                   )
                               )
+                          ),
+                          SizedBox(height:  _mediaHeight*0.02),
+                          SizedBox(
+                            width: _mediaWidth*0.5,
+                            height: _mediaHeight*0.04,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(context, new MaterialPageRoute(
+                                  builder: (context) =>
+                                  new businessLogin())
+                                );
+                              },
+                              child: Text("Business Account",style: TextStyle(fontFamily: 'Quicksand',fontWeight: FontWeight.w500),),
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(28.0),
+                                        side: BorderSide(color: Colors.blue)
+                                    )
+                                  )
+
+                              ),
+                            ),
                           ),
                           SizedBox(height:  _mediaHeight*0.02),
                         ],
