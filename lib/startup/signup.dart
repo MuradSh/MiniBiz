@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minibiz/widgets/TextFieldEnhanced.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:minibiz/startup/login.dart';
 
 class signup extends StatefulWidget {
   const signup({Key? key}) : super(key: key);
@@ -25,14 +26,16 @@ class _signupState extends State<signup> {
     _mediaWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child:SafeArea(
             child: Column(
-              children: [   Image(
-                image: AssetImage("assets/MinibizEdited.png"),
-                height: _mediaHeight*0.25,
-                width: _mediaHeight*0.25,
-              ),
+              children: [
+                Image(
+                  image: AssetImage("assets/MinibizEdited.png"),
+                  height: _mediaHeight*0.23,
+                  width: _mediaHeight*0.23,
+                ),
 
                 Text(
                   "Welcome",
@@ -44,61 +47,86 @@ class _signupState extends State<signup> {
                 ),
                 SizedBox(height:  _mediaHeight*0.004),
                 Text(
-                  "Register To Continue",
+                  "Sign Up To Continue",
                   style: TextStyle(
                       color: Colors.grey,
                       fontSize: 20,
                       fontFamily: 'Quicksand'
                   ),
                 ),
-                // ClipPath(
-                //   clipper: WaveClipperTwo(reverse: true),
-                //   child: Container(
-                //     height: 220,
-                //     color: Colors.red,
-                //     child:
-                //         Container(
-                //           child:
-                //                   Row(
-                //                     children: [
-                //                       // TextFieldEnhanced("placeholder", IconData(0x41, fontFamily: 'Roboto'),),
-                //                       // TextFieldEnhanced("placeholder", IconData(0x41, fontFamily: 'Roboto'))
-                //                     ],
-                //                   ),
-                //         ),
-                //             ),
-                //   ),
-                SizedBox(height: _mediaHeight*0.03,),
+                SizedBox(height:  _mediaHeight*0.03),
+                ClipPath(
+                  clipper: WaveClipperTwo(reverse: true),
+                  child: Container(
+                    height: _mediaHeight-_mediaHeight*0.41,
+                    width: _mediaWidth,
+                    color: Colors.grey[200],
+                    child:Container(
+                      child: Column(
+                        children: [
+                          SizedBox(height:  _mediaHeight*0.07),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: TextFieldEnhanced("Phone",Icons.phone),
+                          ),
+                          SizedBox(height:  _mediaHeight*0.05),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: TextFieldEnhanced("Username",Icons.person),
+                          ),
+                          SizedBox(height:  _mediaHeight*0.05),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: TextFieldEnhanced("Password",Icons.lock,passField: true,),
+                          ),
+                          SizedBox(height:  _mediaHeight*0.03),
+                          SizedBox(
+                            width: _mediaWidth*0.8,
+                            height: _mediaHeight*0.07,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                print("a");
+                              },
+                              child: Text("Sign Up",style: TextStyle(fontFamily: 'Quicksand',fontWeight: FontWeight.w500),),
+                              style: ElevatedButton.styleFrom(
+                                  textStyle: TextStyle(
+                                      fontSize: 28
+                                  ),
+                                  primary: Colors.lightBlue,
+                                  elevation: 3
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                              child: new Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(context, new MaterialPageRoute(
+                                              builder: (context) =>
+                                              new login())
+                                          );
+                                        },
+                                        child: Text(
+                                          "Already have an account? Log in",
+                                          style: TextStyle(
+                                              fontSize: 15, color: Colors.grey),
+                                        ),
+                                      )
+                                    ],
+                                  )
+                              )
+                          ),
+                          SizedBox(height:  _mediaHeight*0.02),
+                    ],
+                  ),
+                        ),
+                            ),
+                  ),
 
-                TextFieldEnhanced("Name", IconData(0x41, fontFamily: 'Roboto'),paddingText: EdgeInsets.all(5),),
-
-                TextFieldEnhanced("Email", IconData(0x41, fontFamily: 'Roboto'),paddingText: EdgeInsets.all(5),),
-                TextFieldEnhanced("password", IconData(0x41, fontFamily: 'Roboto'),),
-                TextFieldEnhanced("confirm password", IconData(0x41, fontFamily: 'Roboto'),paddingText: EdgeInsets.all(5),),
-                TextFieldEnhanced("City", IconData(0x41, fontFamily: 'Roboto'),paddingText: EdgeInsets.all(5),),
-
-
-                SizedBox(height: _mediaHeight*0.05,),
-
-                TextButton(
-                    onPressed: (){},
-                    child: Container(
-                      width: _mediaWidth*0.9,
-                      height: _mediaHeight*0.059,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                      color: Color.fromRGBO(70, 197, 206, 1)
-
-                      ),
-
-                      child: Center(
-                        child: Text(
-                        "Create Account",
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Quicksand'),
-                        textAlign: TextAlign.center,
-                      ),
-                      )
-                ))
 
 
               ],

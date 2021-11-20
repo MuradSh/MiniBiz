@@ -33,7 +33,7 @@ class TextFieldEnhanced extends StatelessWidget {
     return TextField(
       decoration: InputDecoration(
         hintText: placeholder,
-        hintStyle: TextStyle(fontSize: (fontSize==-1 ? _mediaHeight*0.03 : fontSize), color: Color(0xffa1a1a1)),
+        hintStyle: TextStyle(fontSize: (fontSize==-1 ? _mediaHeight*0.04 : fontSize), color: Color(0xffa1a1a1)),
         contentPadding: this.paddingText,
         prefixIcon: Icon(this.icon,size: (fontSize==-1 ? _mediaHeight*0.04 : fontSize*1.01),color: Color(0xffa1a1a1)),
         enabledBorder: UnderlineInputBorder(
