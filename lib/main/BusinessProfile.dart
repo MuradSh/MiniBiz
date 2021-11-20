@@ -62,7 +62,7 @@ class _BusinessProfileState extends State<BusinessProfile> {
                   SizedBox(height: 10,),
 
                   Expanded(
-                    child: ListView.builder(
+                    child: ListView.separated(
                         physics: BouncingScrollPhysics(),
                       itemCount: _listData.length,
                         itemBuilder: (_,index){
@@ -77,11 +77,16 @@ class _BusinessProfileState extends State<BusinessProfile> {
                           leading: _iconList[index],
                           onTap: (){
                             _navigateAndDisplaySelection(context, index);
-                            //Navigator.push(context, MaterialPageRoute(builder: (context) => login()));
                           },
 
                         );
-                        }),
+                        }, separatorBuilder: (BuildContext context, int index) {
+
+                        return Divider(thickness: 0.8,
+                          indent: 20,
+                          endIndent: 20,
+                        );
+                    },),
                   ),
 
               ],
