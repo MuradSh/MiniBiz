@@ -4,6 +4,8 @@ import 'package:minibiz/main/feed.dart';
 import 'package:flutter/material.dart';
 
 class bottomNavBar extends StatefulWidget {
+  static const String idScreen = "bottomNavbar";
+
   const bottomNavBar({Key? key}) : super(key: key);
 
   @override

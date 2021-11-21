@@ -12,6 +12,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:minibiz/main/feed.dart';
 
 class login extends StatefulWidget {
+  static const String idScreen = "login";
+
   const login({Key? key}) : super(key: key);
 
   @override
@@ -30,7 +32,7 @@ class _loginState extends State<login> {
   _handleLogin() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if(_usernameField.text.length==0 || _passFieldController.text.length==0){
-      PageHelper.showOkAlertDialog(context: context,alertDialogTitle: "Error",alertDialogMessage: 'Please enter values');
+      PageHelper.showOkAlertDialog(context: context,alertDialogTitle: "Error", alertDialogMessage: 'Please enter values');
       return;
     }
     String emailFinal = "a"+_usernameField.text.trim()+"@minibizpersonal.com";
@@ -131,12 +133,12 @@ class _loginState extends State<login> {
                           SizedBox(height:  _mediaHeight*0.07),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: TextFieldEnhanced("Username",Icons.person,controller: _usernameField,),
+                            child: TextFieldEnhanced("Username",Icons.person,controller: _usernameField,fontSize: 20,),
                           ),
                           SizedBox(height:  _mediaHeight*0.05),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: TextFieldEnhanced("Password",Icons.lock,passField: true,controller: _passFieldController,),
+                            child: TextFieldEnhanced("Password",Icons.lock,passField: true,controller: _passFieldController,fontSize: 20),
                           ),
                           SizedBox(height:  _mediaHeight*0.05),
                           SizedBox(
@@ -180,6 +182,7 @@ class _loginState extends State<login> {
                               )
                           ),
                           SizedBox(height:  _mediaHeight*0.02),
+
                           SizedBox(
                             width: _mediaWidth*0.5,
                             height: _mediaHeight*0.04,
@@ -203,6 +206,7 @@ class _loginState extends State<login> {
                               ),
                             ),
                           ),
+                          Spacer(),
                           SizedBox(height:  _mediaHeight*0.02),
                         ],
                     ),

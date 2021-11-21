@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:minibiz/main/ChangeBusinessDetails.dart';
 import 'package:minibiz/startup/login.dart';
 
-class BusinessProfile extends StatefulWidget {
-  const BusinessProfile({Key? key}) : super(key: key);
+class PersonalProfile extends StatefulWidget {
+  const PersonalProfile({Key? key}) : super(key: key);
 
   @override
-  _BusinessProfileState createState() => _BusinessProfileState();
+  _PersonalProfileState createState() => _PersonalProfileState();
 }
 
-class _BusinessProfileState extends State<BusinessProfile> {
+class _PersonalProfileState extends State<PersonalProfile> {
   double _mediaHeight = 0;
   double _mediaWidth = 0;
-  var _listData = ['Change Business details', 'past orders', 'Manage  Customer Reviews', 'Chat with customers','Logout'];
+  var _listData = ['Change Personal details', 'past orders', 'Manage Your Reviews', 'Chat with Businesses', 'Logout'];
   var _iconList = [Icon(Icons.info_outline),Icon(Icons.receipt_long_rounded),Icon(Icons.star),Icon(Icons.chat),Icon(Icons.logout)];
 
   @override
@@ -43,14 +43,14 @@ class _BusinessProfileState extends State<BusinessProfile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                            "Business Name",
-                            style:  TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 20,
-                                fontFamily: 'Quicksand'),
+                          "Customer Name",
+                          style:  TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 20,
+                              fontFamily: 'Quicksand'),
                         ),
                         SizedBox(height: 5,),
-                        Text("\$500"),
+                        //Text("\$500"),
                       ],
                     )
                   ],
@@ -60,35 +60,35 @@ class _BusinessProfileState extends State<BusinessProfile> {
                   color: Colors.black45,
                   thickness: 2,
                 ),
-                  SizedBox(height: 10,),
+                SizedBox(height: 10,),
 
-                  Expanded(
-                    child: ListView.separated(
-                        physics: BouncingScrollPhysics(),
-                      itemCount: _listData.length,
-                        itemBuilder: (_,index){
-                        return ListTile(
+                Expanded(
+                  child: ListView.separated(
+                    physics: BouncingScrollPhysics(),
+                    itemCount: _listData.length,
+                    itemBuilder: (_,index){
+                      return ListTile(
 
-                          title: Text(_listData[index],
+                        title: Text(_listData[index],
                             style:  TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 20,
-                              fontFamily: 'Quicksand')
-                          ),
-                          leading: _iconList[index],
-                          onTap: (){
-                            _navigateAndDisplaySelection(context, index);
-                          },
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                fontFamily: 'Quicksand')
+                        ),
+                        leading: _iconList[index],
+                        onTap: (){
+                          _navigateAndDisplaySelection(context, index);
+                        },
 
-                        );
-                        }, separatorBuilder: (BuildContext context, int index) {
+                      );
+                    }, separatorBuilder: (BuildContext context, int index) {
 
-                        return Divider(thickness: 0.8,
-                          indent: 20,
-                          endIndent: 20,
-                        );
-                    },),
-                  ),
+                    return Divider(thickness: 0.8,
+                      indent: 20,
+                      endIndent: 20,
+                    );
+                  },),
+                ),
 
               ],
             ),

@@ -1,6 +1,8 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:minibiz/main/BusinessProfile.dart';
+import 'package:minibiz/main/PersonalProfile.dart';
 import 'package:minibiz/main/bottomNavBar.dart';
 import 'package:minibiz/main/ChangeBusinessDetails.dart';
 import 'package:minibiz/main/feed.dart';
@@ -42,9 +44,10 @@ class MyApp extends StatelessWidget {
           splashIconSize: 500,
           splashTransition: SplashTransition.fadeTransition,
            backgroundColor: Colors.white,
-          //duration: 1500,
         ),
-        // home: SplashPage(),
+
+        //initialRoute: FirebaseAuth.instance.currentUser == null ? login.idScreen: bottomNavBar.idScreen,
+
       ),
     );
   }
