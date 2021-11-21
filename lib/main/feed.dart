@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:minibiz/widgets/PostWidget.dart';
 import 'package:minibiz/main/makePost.dart';
@@ -11,10 +14,12 @@ class feed extends StatefulWidget {
 }
 
 class _feedState extends State<feed> {
-
+  var posts = [];//stores all posts from firestore
+  var customerTypePref = ['Antiques'];//will hold the biz preference of customer for now I made dummy list
 
   initState(){
     getInfo();
+    getPosts();
   }
   // profile type, 0 - user , 1 -biz
   int type = 0;
@@ -26,6 +31,27 @@ class _feedState extends State<feed> {
         type=1;
       });
     }
+    // I saved bizPref List in personalDetails as json in shared prefereces
+    //was trying to conv json data to list back again Error was coming didnt understood
+    //customerTypePref = json.decode(prefs.getString("bizPref"));
+  }
+
+  getPosts() async{
+
+    FirebaseFirestore.instance.collection("posts").get().then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        print(result["postText"]);
+        if(result["postType"].length!=0){print(result["postType"][0]);}
+        //if(result["postType"])
+        if (customerTypePref.any((item) => result["postType"].contains(item))) {
+          // Lists have at least one common element
+          posts.add(result);
+
+        }
+        print(result.data());
+        print(posts);
+      });
+    });
   }
 
   @override
@@ -59,7 +85,10 @@ class _feedState extends State<feed> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            PostWidget()
+            for (int i=0; i<posts.length; i++)
+              PostWidget(0, "name", posts[i]["postImage"], posts[i]["postText"]),//data is getting stored in posts array but ui not updating
+
+
           ],
         ),
       ),

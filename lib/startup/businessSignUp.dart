@@ -92,7 +92,8 @@ class _businessSignUpState extends State<businessSignUp> {
                                       _usernameController,
                                       _passFieldController,
                                       _phoneFieldController
-                                    ))
+                                    )
+                                )
                                 );
                               },
                               child: Text("Sign Up",style: TextStyle(fontFamily: 'Quicksand',fontWeight: FontWeight.w500),),

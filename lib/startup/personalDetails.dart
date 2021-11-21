@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:minibiz/widgets/TextFieldEnhanced.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -83,6 +85,7 @@ class _personalDetailsState extends State<personalDetails> {
             print("doneee");
             prefs.setString("name", widget.username.text,);
             prefs.setString("type", "user");
+            prefs.setString("bizPref", json.encode(chosenBiz));
       });
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
@@ -153,7 +156,7 @@ class _personalDetailsState extends State<personalDetails> {
                   }).toList(),
                 ),
                 SizedBox(height: 25),
-                Text("What kind of local businesses are you interestd in?",style: TextStyle(
+                Text("What kind of local businesses are you interested in?",style: TextStyle(
                     fontFamily: 'Roboto',
                     fontSize: 17
                 )),

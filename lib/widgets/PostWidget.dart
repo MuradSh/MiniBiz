@@ -1,10 +1,28 @@
 import 'package:flutter/material.dart';
 
 class PostWidget extends StatelessWidget {
-  PostWidget({Key? key}) : super(key: key);
+  //PostWidget({Key? key}) : super(key: key);
+
+  int businessId = 0;
+  String name = "";
+  String postImage = "default image";
+  String postText = "";
+  //List postType = [];
+
+  PostWidget(this.businessId, this.name,this.postImage, this.postText);
+
+  // TextFieldEnhanced(this.placeholder,this.icon, {
+  //   this.passField = false,
+  //   this.fontSize = -1,
+  //   this.paddingText = const EdgeInsets.fromLTRB(10, 10, 20, 10),
+  //   this.focusNode,
+  //   this.controller,
+  //   this.onChange
+  // });
 
   double _mediaHeight = 0;
   double _mediaWidth = 0;
+
 
   @override
   Widget build(BuildContext context) {

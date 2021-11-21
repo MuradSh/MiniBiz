@@ -6,6 +6,7 @@ import 'package:minibiz/main/PersonalProfile.dart';
 import 'package:minibiz/main/bottomNavBar.dart';
 import 'package:minibiz/main/ChangeBusinessDetails.dart';
 import 'package:minibiz/main/feed.dart';
+import 'package:minibiz/main/makePost.dart';
 import 'package:minibiz/startup/businessDetails.dart';
 import 'package:minibiz/startup/login.dart';
 import 'package:minibiz/startup/signup.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         //home: login(),
         home: AnimatedSplashScreen(
           splash: Image.asset('assets/SplashFast.gif'),
-          nextScreen: login(),
+          nextScreen: bottomNavBar(),
           splashIconSize: 500,
           splashTransition: SplashTransition.fadeTransition,
            backgroundColor: Colors.white,
