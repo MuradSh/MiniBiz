@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minibiz/main/bottomNavBar.dart';
 import 'package:minibiz/widgets/TextFieldEnhanced.dart';
 import 'package:minibiz/startup/signup.dart';
 import 'package:minibiz/startup/businessLogin.dart';
@@ -7,6 +8,8 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:minibiz/main/feed.dart';
 
 class login extends StatefulWidget {
   const login({Key? key}) : super(key: key);
@@ -25,6 +28,7 @@ class _loginState extends State<login> {
   final _passFieldController = TextEditingController();
 
   _handleLogin() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     if(_usernameField.text.length==0 || _passFieldController.text.length==0){
       PageHelper.showOkAlertDialog(context: context,alertDialogTitle: "Error",alertDialogMessage: 'Please enter values');
       return;
@@ -60,10 +64,13 @@ class _loginState extends State<login> {
       var userId = _auth.currentUser!.uid;
       Navigator.pop(context);
       print("OKKKK");
-      // Navigator.push(context, new MaterialPageRoute(
-      //     builder: (context) =>
-      //     new mainMap()
-      // ));
+      Navigator.push(context, new MaterialPageRoute(
+          builder: (context) =>
+          new bottomNavBar()
+      ));
+
+      prefs.setString("name", _usernameField.text);
+      prefs.setString("type", "user");
     } on FirebaseAuthException catch (e) {
       print(e);
       Navigator.pop(context);

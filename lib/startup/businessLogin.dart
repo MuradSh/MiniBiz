@@ -7,6 +7,9 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:minibiz/widgets/PageHelper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:minibiz/main/feed.dart';
+import 'package:minibiz/main/bottomNavBar.dart';
 
 class businessLogin extends StatefulWidget {
   const businessLogin({Key? key}) : super(key: key);
@@ -24,6 +27,7 @@ class _businessLoginState extends State<businessLogin> {
   final _passFieldController = TextEditingController();
 
   _login() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     if(_nameFieldController.text.length==0 || _passFieldController.text.length==0){
       PageHelper.showOkAlertDialog(context: context,alertDialogTitle: "Error",alertDialogMessage: 'Please enter values');
       return;
@@ -59,10 +63,12 @@ class _businessLoginState extends State<businessLogin> {
       var userId = _auth.currentUser!.uid;
       Navigator.pop(context);
       print("OKKKK");
-      // Navigator.push(context, new MaterialPageRoute(
-      //     builder: (context) =>
-      //     new mainMap()
-      // ));
+      Navigator.push(context, new MaterialPageRoute(
+          builder: (context) =>
+          new bottomNavBar()
+      ));
+      prefs.setString("name", _nameFieldController.text);
+      prefs.setString("type", "business");
     } on FirebaseAuthException catch (e) {
       print(e);
       Navigator.pop(context);

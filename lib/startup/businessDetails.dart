@@ -4,6 +4,9 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:minibiz/widgets/PageHelper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:minibiz/main/feed.dart';
+import 'package:minibiz/main/bottomNavBar.dart';
 
 class BusinessDetails extends StatefulWidget {
   final TextEditingController username;
@@ -27,6 +30,7 @@ class _BusinessDetailsState extends State<BusinessDetails> {
   final _bioFieldController = TextEditingController();
 
   _signup() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     String emailFinal = widget.username.text.trim()+"@minibizwebsite.com";
     showDialog(
       context: context,
@@ -71,11 +75,13 @@ class _BusinessDetailsState extends State<BusinessDetails> {
       })
           .onError((error, stackTrace) => print(error))
           .then((value) {
-        // Navigator.push(context, new MaterialPageRoute(
-        //     builder: (context) =>
-        //     new onBoardDriver()
-        // ));
+        Navigator.push(context, new MaterialPageRoute(
+            builder: (context) =>
+            new bottomNavBar()
+        ));
         print("doneee");
+        prefs.setString("name", widget.username.text);
+        prefs.setString("type", "business");
       });
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);

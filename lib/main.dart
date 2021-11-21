@@ -1,7 +1,9 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:minibiz/main/BusinessProfile.dart';
+import 'package:minibiz/main/bottomNavBar.dart';
 import 'package:minibiz/main/ChangeBusinessDetails.dart';
+import 'package:minibiz/main/feed.dart';
 import 'package:minibiz/startup/businessDetails.dart';
 import 'package:minibiz/startup/login.dart';
 import 'package:minibiz/startup/signup.dart';
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget {
         }
       },
       child: MaterialApp(
-        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

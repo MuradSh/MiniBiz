@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:minibiz/widgets/TextFieldEnhanced.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:minibiz/widgets/PageHelper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:minibiz/main/feed.dart';
+import 'package:minibiz/main/bottomNavBar.dart';
 
 class personalDetails extends StatefulWidget {
 
@@ -30,6 +32,7 @@ class _personalDetailsState extends State<personalDetails> {
   List<dynamic> chosenBiz = [];
 
   _signup() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     String emailFinal = "a"+widget.username.text.trim()+"@minibizpersonal.com";
     showDialog(
       context: context,
@@ -73,11 +76,13 @@ class _personalDetailsState extends State<personalDetails> {
       })
           .onError((error, stackTrace) => print(error))
           .then((value) {
-              // Navigator.push(context, new MaterialPageRoute(
-              //     builder: (context) =>
-              //     new onBoardDriver()
-              // ));
+              Navigator.push(context, new MaterialPageRoute(
+                  builder: (context) =>
+                  new bottomNavBar()
+              ));
             print("doneee");
+            prefs.setString("name", widget.username.text,);
+            prefs.setString("type", "user");
       });
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
